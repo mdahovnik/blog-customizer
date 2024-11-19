@@ -43,6 +43,7 @@ export const Select = (props: SelectProps) => {
 		setIsOpen(false);
 		onChange?.(option);
 	};
+	
 	const handlePlaceHolderClick: MouseEventHandler<HTMLDivElement> = () => {
 		setIsOpen((isOpen) => !isOpen);
 	};
@@ -61,7 +62,10 @@ export const Select = (props: SelectProps) => {
 				ref={rootRef}
 				data-is-active={isOpen}
 				data-testid='selectWrapper'>
-				<img src={arrowDown} alt='иконка стрелочки' className={styles.arrow} />
+				<img
+					src={arrowDown}
+					alt='иконка стрелочки'
+					className={styles.arrow} />
 				<div
 					className={clsx(
 						styles.placeholder,
@@ -83,7 +87,9 @@ export const Select = (props: SelectProps) => {
 					</Text>
 				</div>
 				{isOpen && (
-					<ul className={styles.select} data-testid='selectDropdown'>
+					<ul
+						className={styles.select}
+						data-testid='selectDropdown'>
 						{options
 							.filter((option) => selected?.value !== option.value)
 							.map((option) => (
