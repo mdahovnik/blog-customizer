@@ -31,3 +31,11 @@
 	justify-content: space-between;
 	margin-top: auto;
 }
+
+.form::-webkit-scrollbar {
+	display: none;
+}
+
+.formNoScroll {
+	overflow: hidden;
+}
