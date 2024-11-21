@@ -201,10 +201,3 @@ export const defaultArticleState = {
 export type ArticleStateType = typeof defaultArticleState;
 
 
-// export type TFormState = {
-// 	fontFamily: OptionType,
-// 	fontSize: OptionType,
-// 	fontColor: OptionType,
-// 	backgroundColor: OptionType,
-// 	contentWidth: OptionType
-// }

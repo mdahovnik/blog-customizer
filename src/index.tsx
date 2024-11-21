@@ -14,18 +14,10 @@ const root = createRoot(domNode);
 
 
 const App = () => {
-	const [backgroundColor, setBackgroundColor] = useState(defaultArticleState.backgroundColor.value);
-	const [fontColor, setFontColor] = useState(defaultArticleState.fontColor.value)
-	const [fontFamily, setFontFamily] = useState(defaultArticleState.fontFamily.value);
-	const [fontSize, setFontSize] = useState(defaultArticleState.fontSize.value);
-	const [contentWidth, setContentWidth] = useState(defaultArticleState.contentWidth.value)
+	const [currentArticleState, setArticleState] = useState<ArticleStateType>(defaultArticleState)
 
 	const handleOnChange = (state: ArticleStateType) => {
-		setBackgroundColor(state.backgroundColor.value);
-		setFontColor(state.fontColor.value);
-		setFontSize(state.fontSize.value);
-		setFontFamily(state.fontFamily.value);
-		setContentWidth(state.contentWidth.value)
+		setArticleState({ ...state });
 	}
 
 	return (
@@ -33,11 +25,11 @@ const App = () => {
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': fontFamily,
-					'--font-size': fontSize,
-					'--font-color': fontColor,
-					'--container-width': contentWidth,
-					'--bg-color': backgroundColor,
+					'--font-family': currentArticleState.fontFamily.value,
+					'--font-size': currentArticleState.fontSize.value,
+					'--font-color': currentArticleState.fontColor.value,
+					'--container-width': currentArticleState.contentWidth.value,
+					'--bg-color': currentArticleState.backgroundColor.value,
 				} as CSSProperties
 			}>
 			<ArticleParamsForm onChange={handleOnChange} />

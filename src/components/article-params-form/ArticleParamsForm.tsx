@@ -19,7 +19,6 @@ import {
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
 import { Text } from 'src/ui/text';
-import { useEnterSubmit } from 'src/ui/select/hooks/useEnterSubmit';
 
 type TFormFields = {
 	onChange: (value: ArticleStateType) => void
@@ -32,30 +31,13 @@ export const ArticleParamsForm = ({ onChange }: TFormFields) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useOutsideClickClose({ isOpen, rootRef: containerRef, onChange: setIsOpen });
-	// useEnterSubmit({placeholderRef: containerRef, onChange: setIsOpen})
 
 	const handleArrowBtnClick = () => {
 		setIsOpen(!isOpen);
 	}
 
-	const handleFontFamilySelect = (value: OptionType) => {
-		setFormState({ ...formState, fontFamily: value })
-	}
-
-	const handleFontSizeSelect = (value: OptionType) => {
-		setFormState({ ...formState, fontSize: value })
-	}
-
-	const handleFontColorSelect = (value: OptionType) => {
-		setFormState({ ...formState, fontColor: value })
-	}
-
-	const handleBackgroundColorSelect = (value: OptionType) => {
-		setFormState({ ...formState, backgroundColor: value })
-	}
-
-	const handleContentWidthSelect = (value: OptionType) => {
-		setFormState({ ...formState, contentWidth: value })
+	const handleStateChange = (key: keyof ArticleStateType, value: OptionType) => {
+		setFormState({ ...formState, [key]: value })
 	}
 
 	const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
@@ -77,7 +59,7 @@ export const ArticleParamsForm = ({ onChange }: TFormFields) => {
 				className={clsx(styles.container, { [styles.containerOpen]: isOpen })}
 				ref={containerRef} >
 				<form
-					className={clsx(styles.form, styles.formNoScroll)}
+					className={clsx(styles.form)}
 					onSubmit={handleSubmitForm}
 					onReset={handleResetForm}>
 					<Text
@@ -89,21 +71,21 @@ export const ArticleParamsForm = ({ onChange }: TFormFields) => {
 						title='шрифт'
 						options={fontFamilyOptions}
 						selected={formState.fontFamily}
-						onChange={handleFontFamilySelect}
+						onChange={(option) => handleStateChange('fontFamily', option)}
 					/>
 
 					<RadioGroup
 						title='размер шрифта'
-						name=''
+						name='fontSize'
 						options={fontSizeOptions}
 						selected={formState.fontSize}
-						onChange={handleFontSizeSelect} />
+						onChange={(option) => handleStateChange('fontSize', option)} />
 
 					<Select
 						title='цвет шрифта'
 						options={fontColors}
 						selected={formState.fontColor}
-						onChange={handleFontColorSelect}
+						onChange={(option) => handleStateChange('fontColor', option)}
 					/>
 
 					<Separator></Separator>
@@ -112,13 +94,13 @@ export const ArticleParamsForm = ({ onChange }: TFormFields) => {
 						title='цвет фона'
 						options={backgroundColors}
 						selected={formState.backgroundColor}
-						onChange={handleBackgroundColorSelect} />
+						onChange={(option) => handleStateChange('backgroundColor', option)} />
 
 					<Select
 						title='ширина контента'
 						options={contentWidthArr}
 						selected={formState.contentWidth}
-						onChange={handleContentWidthSelect} />
+						onChange={(option) => handleStateChange('contentWidth', option)} />
 					<div
 						className={styles.bottomContainer}>
 						<Button
