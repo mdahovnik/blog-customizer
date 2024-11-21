@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
 import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
-import { defaultArticleState, OptionType, ArticleStateType } from './constants/articleProps';
+import { defaultArticleState, ArticleStateType } from './constants/articleProps';
 
 import './styles/index.scss';
 import styles from './styles/index.module.scss';
@@ -17,7 +17,7 @@ const App = () => {
 	const [currentArticleState, setArticleState] = useState<ArticleStateType>(defaultArticleState)
 
 	const handleOnChange = (state: ArticleStateType) => {
-		setArticleState({ ...state });
+		setArticleState(state);
 	}
 
 	return (
@@ -32,7 +32,9 @@ const App = () => {
 					'--bg-color': currentArticleState.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm onChange={handleOnChange} />
+			<ArticleParamsForm
+				onChange={handleOnChange}
+				currentArticleState={currentArticleState} />
 			<Article />
 		</main>
 	);

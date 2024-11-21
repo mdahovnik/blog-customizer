@@ -19,11 +19,8 @@ export const Option = (props: OptionProps) => {
 
 	const optionRef = useRef<HTMLDivElement>(null);
 
-	const handleChange = () => {onChange?.(option)
-		console.log(inputId)
-		console.log(isChecked)
-		console.log(groupName)
-		// isChecked = value === selected.title;
+	const handleChange = () => {
+		onChange?.(option)
 	};
 
 	useEnterSubmit({ onChange, option });

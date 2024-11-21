@@ -21,13 +21,14 @@ import { Separator } from 'src/ui/separator';
 import { Text } from 'src/ui/text';
 
 type TFormFields = {
-	onChange: (value: ArticleStateType) => void
+	onChange: (value: ArticleStateType) => void;
+	currentArticleState: ArticleStateType
 }
 
 
-export const ArticleParamsForm = ({ onChange }: TFormFields) => {
+export const ArticleParamsForm = ({ currentArticleState, onChange }: TFormFields) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [formState, setFormState] = useState<ArticleStateType>({ ...defaultArticleState })
+	const [formState, setFormState] = useState<ArticleStateType>(currentArticleState)
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	useOutsideClickClose({ isOpen, rootRef: containerRef, onChange: setIsOpen });
@@ -46,8 +47,8 @@ export const ArticleParamsForm = ({ onChange }: TFormFields) => {
 	}
 
 	const handleResetForm = () => {
-		setFormState({ ...defaultArticleState })
-		onChange({ ...defaultArticleState })
+		setFormState(defaultArticleState)
+		onChange(defaultArticleState)
 	}
 
 	return (
