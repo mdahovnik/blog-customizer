@@ -20,21 +20,25 @@ import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
 import { Text } from 'src/ui/text';
 
-type TFormFields = {
-	onChange: (value: ArticleStateType) => void;
+type TArticleParamsProps = {
+	onArticleChange: (value: ArticleStateType) => void;
 	currentArticleState: ArticleStateType
 }
 
 
-export const ArticleParamsForm = ({ currentArticleState, onChange }: TFormFields) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
+export const ArticleParamsForm = ({ currentArticleState, onArticleChange }: TArticleParamsProps) => {
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [formState, setFormState] = useState<ArticleStateType>(currentArticleState)
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	useOutsideClickClose({ isOpen, rootRef: containerRef, onChange: setIsOpen });
+	useOutsideClickClose({
+		isOpen: isMenuOpen,
+		rootRef: containerRef,
+		onChange: setIsMenuOpen
+	});
 
 	const handleArrowBtnClick = () => {
-		setIsOpen(!isOpen);
+		setIsMenuOpen(!isMenuOpen);
 	}
 
 	const handleStateChange = (key: keyof ArticleStateType, value: OptionType) => {
@@ -43,24 +47,24 @@ export const ArticleParamsForm = ({ currentArticleState, onChange }: TFormFields
 
 	const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		onChange(formState);
+		onArticleChange(formState);
 	}
 
 	const handleResetForm = () => {
 		setFormState(defaultArticleState)
-		onChange(defaultArticleState)
+		onArticleChange(defaultArticleState)
 	}
 
 	return (
 		<>
 			<ArrowButton
-				isOpen={isOpen}
+				isOpen={isMenuOpen}
 				onClick={handleArrowBtnClick} />
 			<aside
-				className={clsx(styles.container, { [styles.containerOpen]: isOpen })}
+				className={clsx(styles.container, { [styles.containerOpen]: isMenuOpen })}
 				ref={containerRef} >
 				<form
-					className={clsx(styles.form)}
+					className={styles.form}
 					onSubmit={handleSubmitForm}
 					onReset={handleResetForm}>
 					<Text
@@ -68,12 +72,12 @@ export const ArticleParamsForm = ({ currentArticleState, onChange }: TFormFields
 						weight={800}
 						family='open-sans'
 						uppercase>задать параметры</Text>
+
 					<Select
 						title='шрифт'
 						options={fontFamilyOptions}
 						selected={formState.fontFamily}
-						onChange={(option) => handleStateChange('fontFamily', option)}
-					/>
+						onChange={(option) => handleStateChange('fontFamily', option)} />
 
 					<RadioGroup
 						title='размер шрифта'
@@ -102,6 +106,7 @@ export const ArticleParamsForm = ({ currentArticleState, onChange }: TFormFields
 						options={contentWidthArr}
 						selected={formState.contentWidth}
 						onChange={(option) => handleStateChange('contentWidth', option)} />
+						
 					<div
 						className={styles.bottomContainer}>
 						<Button
