@@ -19,12 +19,14 @@ export const Option = (props: OptionProps) => {
 
 	const optionRef = useRef<HTMLDivElement>(null);
 
-	const handleChange = () => onChange?.(option);
+	const handleChange = () => {
+		onChange?.(option)
+	};
 
 	useEnterSubmit({ onChange, option });
 
 	const inputId = `${groupName}_radio_item_with_value__${value}`;
-	const isChecked = value === selected.title;
+	let isChecked = value === selected.title;
 
 	return (
 		<div

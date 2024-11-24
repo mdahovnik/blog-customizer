@@ -18,10 +18,10 @@ export const Option = (props: OptionProps) => {
 		option: { value, title, optionClassName, className },
 		onClick,
 	} = props;
+
 	const optionRef = useRef<HTMLLIElement>(null);
 
-	const handleClick =
-		(clickedValue: OptionType['value']): MouseEventHandler<HTMLLIElement> =>
+	const handleClick = (clickedValue: OptionType['value']): MouseEventHandler<HTMLLIElement> =>
 		() => {
 			onClick(clickedValue);
 		};
